@@ -1,11 +1,13 @@
 {
   "name": "nuxt-permission-checker",
+  "author": "İlker Durmaz <ilkerdurmaz@gmail.com> (https://github.com/ilkerdurmaz)",
   "version": "1.0.0",
   "description": "Nuxt 3 module for permission based access control",
   "repository": {
     "type": "git",
     "url": "https://github.com/ilkerdurmaz/nuxt-permission-checker.git"
   },
+  "homepage": "https://github.com/ilkerdurmaz/nuxt-permission-checker",
   "license": "MIT",
   "type": "module",
   "exports": {
