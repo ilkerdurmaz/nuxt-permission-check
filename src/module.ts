@@ -5,13 +5,13 @@ import { defu } from 'defu'
 export interface ModuleOptions {
   global?: boolean
   redirect?: string | boolean
-  routePermissions?: Record<string, string | string[]>
+  routePermissions?: Record<string, string[]>
 }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'nuxt-permission-checker',
-    configKey: 'nuxtPermissionChecker',
+    name: 'nuxt-permission-check',
+    configKey: 'nuxtPermissionCheck',
   },
   // Default configuration options of the Nuxt module
   defaults: {
@@ -22,7 +22,7 @@ export default defineNuxtModule<ModuleOptions>({
 
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
-    nuxt.options.runtimeConfig.public.nuxtPermissionChecker = defu(nuxt.options.runtimeConfig.public.nuxtPermissionChecker, options)
+    nuxt.options.runtimeConfig.public.nuxtPermissionCheck = defu(nuxt.options.runtimeConfig.public.nuxtPermissionCheck, options)
 
     // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
     addPlugin(resolver.resolve('./runtime/plugin'))

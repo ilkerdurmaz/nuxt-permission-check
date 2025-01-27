@@ -5,9 +5,17 @@
   "description": "Nuxt 3 module for permission based access control",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ilkerdurmaz/nuxt-permission-checker.git"
+    "url": "https://github.com/ilkerdurmaz/nuxt-permission-check.git"
   },
-  "homepage": "https://github.com/ilkerdurmaz/nuxt-permission-checker",
+  "keywords": [
+    "nuxt",
+    "nuxt3",
+    "nuxt module",
+    "permission",
+    "access-control",
+    "roles"
+  ],
+  "homepage": "https://github.com/ilkerdurmaz/nuxt-permission-check",
   "license": "MIT",
   "type": "module",
   "exports": {

@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-useNuxtApp().$permissionChecker.setPermissions(['user1:permission'])
+useNuxtApp().$permissionCheck.setPermissions(['user1:permission'])
 </script>

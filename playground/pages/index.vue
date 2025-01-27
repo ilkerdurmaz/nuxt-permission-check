@@ -119,7 +119,7 @@
           <pre class="bg-gray-50 p-3 rounded"><code>// nuxt.config.ts
 export default defineNuxtConfig({
     modules: ['nuxt-permission'],
-    nuxtPermissionChecker: {
+    nuxtPermissionCheck: {
         global: true,     // Enable global route middleware
         redirect: '/'     // Redirect path for unauthorized access
     }
@@ -140,7 +140,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     };
 
     // Set route permissions
-    nuxtApp.$permissionChecker.setRoutePermissions(routePermissions);
+    nuxtApp.$permissionCheck.setRoutePermissions(routePermissions);
 });</code></pre>
         </div>
 
@@ -150,10 +150,10 @@ export default defineNuxtPlugin((nuxtApp) => {
           </h3>
           <pre class="bg-gray-50 p-3 rounded"><code>// Set permissions for current user
 const app = useNuxtApp();
-app.$permissionChecker.setPermissions(['user1:permission']);
+app.$permissionCheck.setPermissions(['user1:permission']);
 
 // Handle unauthorized access
-app.$permissionChecker.setUnauthorizedCallback((route, requiredPermissions) => {
+app.$permissionCheck.setUnauthorizedCallback((route, requiredPermissions) => {
     console.log(`Access Denied: Missing permissions (${requiredPermissions}) for ${route}`);
 });</code></pre>
         </div>
@@ -175,7 +175,7 @@ app.$permissionChecker.setUnauthorizedCallback((route, requiredPermissions) => {
 
 <script setup>
 const app = useNuxtApp()
-const permission = app.$permissionChecker
+const permission = app.$permissionCheck
 const notification = ref(null)
 
 const availablePermissions = [
@@ -196,7 +196,7 @@ watch(selectedPermissions, (newPermissions) => {
 
 // Unauthorized callback
 onMounted(() => {
-  app.$permissionChecker.setUnauthorizedCallback((route, requiredPermissions) => {
+  app.$permissionCheck.setUnauthorizedCallback((route, requiredPermissions) => {
     notification.value?.showMessage(`You do not have the required permissions (${requiredPermissions}) to access this page`)
   })
 })

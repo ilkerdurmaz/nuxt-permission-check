@@ -1,84 +1,128 @@
-<!--
-Get your module up and running quickly.
+# Nuxt Permission Check
 
-Find and replace all on all files (CMD+SHIFT+F):
-- Name: My Module
-- Package name: my-module
-- Description: My new Nuxt module
--->
+[![npm version](https://badge.fury.io/js/nuxt-permission-check.svg)](https://badge.fury.io/js/nuxt-permission-check)
 
-# My Module
-
-[![npm version][npm-version-src]][npm-version-href]
-[![npm downloads][npm-downloads-src]][npm-downloads-href]
-[![License][license-src]][license-href]
-[![Nuxt][nuxt-src]][nuxt-href]
-
-My new Nuxt module for doing amazing things.
-
-- [✨ &nbsp;Release Notes](/CHANGELOG.md)
-<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
-<!-- - [📖 &nbsp;Documentation](https://example.com) -->
+A powerful Nuxt module for implementing permission-based access control in your Nuxt 3 applications.
 
 ## Features
 
-<!-- Highlight some of the features your module provide here -->
-- ⛰ &nbsp;Foo
-- 🚠 &nbsp;Bar
-- 🌲 &nbsp;Baz
+- 🛡️ &nbsp;Simple permission-based access control
+- 🔒 &nbsp;Route protection with middleware
+- ⚡️ &nbsp;Composable for checking permissions
+- 🎯 &nbsp;TypeScript support
+- 🔄 &nbsp;Dynamic permission updates
+- 🎨 &nbsp;Easy integration with your authentication system
+- 🔀 &nbsp;Support for AND/OR permission combinations
 
 ## Quick Setup
 
-Install the module to your Nuxt application with one command:
+1. Install the module to your Nuxt application:
 
 ```bash
-npx nuxi module add my-module
+# Using npm
+npm install nuxt-permission-check
+
+# Using yarn
+yarn add nuxt-permission-check
+
+# Using pnpm
+pnpm add nuxt-permission-check
 ```
 
-That's it! You can now use My Module in your Nuxt app ✨
+2. Add the module to your `nuxt.config.ts`:
 
+```ts
+export default defineNuxtConfig({
+  modules: ['nuxt-permission-check'],
+  nuxtPermissionCheck: {
+    global: true,     // Enable global route middleware
+    redirect: '/',    // Redirect path for unauthorized access
+    routePermissions: {} // Define route permissions globally
+  }
+})
+```
 
-## Contribution
+## Usage
 
-<details>
-  <summary>Local development</summary>
+### Basic Setup
+
+Create a plugin to define your route permissions (e.g., `plugins/permissions.ts`):
+
+```ts
+export default defineNuxtPlugin((nuxtApp) => {
+  const routePermissions = {
+    'user-page': ['user:permission'],                    // Single permission
+    'admin-page': ['admin:permission'],                  // Single permission
+    'reports': ['read:reports', 'export:reports'],       // Multiple AND permissions
+    'settings': ['admin:access', '||user:settings']      // OR permission combination
+  }
+
+  // Set route permissions
+  nuxtApp.$permissionCheck.setRoutePermissions(routePermissions)
   
-  ```bash
-  # Install dependencies
-  npm install
-  
-  # Generate type stubs
-  npm run dev:prepare
-  
-  # Develop with the playground
-  npm run dev
-  
-  # Build the playground
-  npm run dev:build
-  
-  # Run ESLint
-  npm run lint
-  
-  # Run Vitest
-  npm run test
-  npm run test:watch
-  
-  # Release new version
-  npm run release
-  ```
+  // Set initial user permissions
+  nuxtApp.$permissionCheck.setPermissions(['user:permission'])
+})
+```
 
-</details>
+### Permission Types
 
+The module supports different permission combinations:
 
-<!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-version-href]: https://npmjs.com/package/my-module
+- Single permission: `['permission']`
+- Multiple AND permissions: `['permission1', 'permission2']` (requires all)
+- OR permissions: `['permission1', '||permission2']` (requires any)
 
-[npm-downloads-src]: https://img.shields.io/npm/dm/my-module.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-downloads-href]: https://npm.chart.dev/my-module
+### Checking Permissions in Components
 
-[license-src]: https://img.shields.io/npm/l/my-module.svg?style=flat&colorA=020420&colorB=00DC82
-[license-href]: https://npmjs.com/package/my-module
+Use the provided composable in your components:
 
-[nuxt-src]: https://img.shields.io/badge/Nuxt-020420?logo=nuxt.js
-[nuxt-href]: https://nuxt.com
+```vue
+<script setup>
+const app = useNuxtApp()
+const { hasPermission } = app.$permissionCheck
+
+// Check permissions
+const canAccessAdmin = hasPermission(['admin:access'])
+const canManageUsers = hasPermission(['read:users', 'write:users'])
+const canAccessSettings = hasPermission(['admin:settings', '||user:settings'])
+</script>
+
+<template>
+  <div>
+    <button v-if="canAccessAdmin">
+      Admin Panel
+    </button>
+    
+    <div v-if="canManageUsers">
+      User Management
+    </div>
+
+    <div v-if="canAccessSettings">
+      Settings
+    </div>
+  </div>
+</template>
+```
+
+### Handling Unauthorized Access
+
+You can set up a callback to handle unauthorized access attempts:
+
+```ts
+app.$permissionCheck.setUnauthorizedCallback((route, requiredPermissions) => {
+  console.log(`Access Denied: Missing permissions (${requiredPermissions}) for ${route}`)
+  // Show notification, redirect, etc.
+})
+```
+
+## Development
+
+- Clone this repository
+- Install dependencies using `pnpm install`
+- Start development server using `pnpm dev`
+
+## License
+
+[MIT License](./LICENSE)
+
