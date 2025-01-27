@@ -1,7 +1,7 @@
 {
   "name": "nuxt-permission-checker",
   "author": "İlker Durmaz <ilkerdurmaz@gmail.com> (https://github.com/ilkerdurmaz)",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Nuxt 3 module for permission based access control",
   "repository": {
     "type": "git",
@@ -48,7 +48,7 @@
     "changelogen": "^0.5.7",
     "eslint": "^9.19.0",
     "nuxt": "^3.15.2",
-    "typescript": "~5.7.3",
+    "typescript": "5.6.3",
     "vitest": "^3.0.4",
     "vue-tsc": "^2.2.0"
   }
