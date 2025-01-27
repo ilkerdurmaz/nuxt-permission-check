@@ -4,8 +4,7 @@ import { defu } from 'defu'
 // Module options TypeScript interface definition
 export interface ModuleOptions {
   global?: boolean
-  redirect?: string | false
-  [key: string]: boolean | string | undefined
+  redirect?: string | boolean
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -16,13 +15,12 @@ export default defineNuxtModule<ModuleOptions>({
   // Default configuration options of the Nuxt module
   defaults: {
     global: true,
-    redirect: false,
+    redirect: '/',
   },
-  setup(_options, _nuxt) {
+
+  setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
-    _nuxt.options.runtimeConfig.public.nuxtPermissionChecker = defu(_nuxt.options.runtimeConfig.public.nuxtPermissionChecker as ModuleOptions, {
-      ..._options,
-    })
+    nuxt.options.runtimeConfig.public.nuxtPermissionChecker = defu(nuxt.options.runtimeConfig.public.nuxtPermissionChecker, options)
 
     // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
     addPlugin(resolver.resolve('./runtime/plugin'))
