@@ -38,11 +38,11 @@ export const usePermission = () => {
     return userPermissions.value.includes(permission)
   }
 
-  const getRequiredRoutePermissions = (routeName: string): string[] => {
-    return routePermissions.value[routeName]
+  const getRequiredRoutePermissions = (routeName: string): string => {
+    return routePermissions.value[routeName] as string
   }
 
-  const canAccessRoute = (routeName: string, customRequiredPermissions: string): boolean => {
+  const canAccessRoute = (routeName: string, customRequiredPermissions?: string): boolean => {
     if (isRoot.value) return true
 
     const requiredPermissions = customRequiredPermissions ?? getRequiredRoutePermissions(routeName)

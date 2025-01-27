@@ -5,6 +5,7 @@ import { defu } from 'defu'
 export interface ModuleOptions {
   global?: boolean
   redirect?: string | boolean
+  routePermissions?: Record<string, string | string[]>
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -16,6 +17,7 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     global: true,
     redirect: '/',
+    routePermissions: {},
   },
 
   setup(options, nuxt) {

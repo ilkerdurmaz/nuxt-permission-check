@@ -1,11 +1,12 @@
 import type { DirectiveBinding } from 'vue'
+import type { RouteLocationNormalizedGeneric } from 'vue-router'
 import { usePermission } from './composable'
 import { defineNuxtPlugin, addRouteMiddleware, useRuntimeConfig, abortNavigation } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig().public.nuxtPermissionChecker
   const permission = usePermission()
-  let unauthorizedCallback: (to: Route, permissions: string[]) => void = () => {}
+  let unauthorizedCallback: (to: RouteLocationNormalizedGeneric, permissions: string) => void = () => {}
 
   if (config.routePermissions) {
     permission.setRoutePermissions(config.routePermissions)
@@ -13,8 +14,8 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // route middleware
   addRouteMiddleware('permission-checker', (to) => {
-    if (to.name && !permission.canAccessRoute(to.name.toString(), to.meta.permissions)) {
-      unauthorizedCallback(to, to.meta.permissions ?? permission.getRequiredRoutePermissions(to.name.toString()))
+    if (to.name && !permission.canAccessRoute(to.name.toString(), to.meta.permissions as string | undefined)) {
+      unauthorizedCallback(to, to.meta.permissions as string | undefined ?? permission.getRequiredRoutePermissions(to.name.toString()))
       return config.redirect ?? abortNavigation()
     }
   }, { global: config.global })
@@ -43,7 +44,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     provide: {
       permissionChecker: {
         ...permission,
-        setUnauthorizedCallback: (callback: (to: Route, permissions: string[]) => void) => {
+        setUnauthorizedCallback: (callback: (to: RouteLocationNormalizedGeneric, permissions: string) => void) => {
           unauthorizedCallback = callback
         },
       },
