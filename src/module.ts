@@ -1,10 +1,10 @@
 import { defineNuxtModule, addPlugin, createResolver, addImports } from '@nuxt/kit'
-import { defu } from 'defu'
+import defu from 'defu'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
   global?: boolean
-  redirect?: string
+  redirect?: string | false
   [key: string]: boolean | string | undefined
 }
 
@@ -14,7 +14,10 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: 'nuxtPermissionChecker',
   },
   // Default configuration options of the Nuxt module
-  defaults: {},
+  defaults: {
+    global: true,
+    redirect: false,
+  },
   setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url)
     _nuxt.options.runtimeConfig.public.nuxtPermissionChecker = defu(_nuxt.options.runtimeConfig.public.nuxtPermissionChecker as ModuleOptions, {

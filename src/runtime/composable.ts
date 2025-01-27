@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 
-interface RoutePermissions {
+// Interface'i export edelim
+export interface RoutePermissions {
   [key: string]: string | string[]
 }
 
@@ -41,10 +42,11 @@ export const usePermission = () => {
     return routePermissions.value[routeName]
   }
 
-  const canAccessRoute = (routeName: string): boolean => {
+  const canAccessRoute = (routeName: string, customRequiredPermissions: string): boolean => {
     if (isRoot.value) return true
 
-    const requiredPermissions = getRequiredRoutePermissions(routeName)
+    const requiredPermissions = customRequiredPermissions ?? getRequiredRoutePermissions(routeName)
+
     if (!requiredPermissions) return true
 
     return hasPermission(requiredPermissions)

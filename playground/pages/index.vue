@@ -174,7 +174,6 @@ app.$permissionChecker.setUnauthorizedCallback((route, requiredPermissions) => {
 </template>
 
 <script setup>
-console.log('index.vue')
 const app = useNuxtApp()
 const permission = app.$permissionChecker
 const notification = ref(null)
