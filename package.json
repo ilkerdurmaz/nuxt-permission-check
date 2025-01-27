@@ -1,8 +1,11 @@
 {
   "name": "nuxt-permission-checker",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Nuxt 3 module for permission based access control",
-  "repository": "your-org/my-module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ilkerdurmaz/nuxt-permission-checker.git"
+  },
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -24,6 +27,7 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"

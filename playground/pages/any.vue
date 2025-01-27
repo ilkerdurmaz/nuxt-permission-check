@@ -1,5 +1,18 @@
 <template>
-<div>
-    <h1>Any</h1>
-</div>
+  <div class="container mx-auto p-8">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h1 class="text-3xl font-medium mb-4">
+        Any Page
+      </h1>
+      <p class="text-gray-600 mb-4">
+        This page is accessible to all users
+      </p>
+      <NuxtLink
+        to="/"
+        class="text-blue-500 hover:underline"
+      >
+        Back to Home
+      </NuxtLink>
+    </div>
+  </div>
 </template>
