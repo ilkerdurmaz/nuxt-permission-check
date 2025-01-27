@@ -1,0 +1,22 @@
+# Development/Test files
+playground/
+test/
+*.test.ts
+*.spec.ts
+
+# Source files (since we'll publish the compiled version)
+src/
+tsconfig.json
+
+# Development configs
+.eslintrc
+.prettierrc
+.gitignore
+.nuxt
+.output
+.vscode/
+
+# Misc
+node_modules/
+.DS_Store
+*.log 
