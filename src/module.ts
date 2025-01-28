@@ -6,6 +6,7 @@ export interface ModuleOptions {
   global?: boolean
   redirect?: string | boolean
   routePermissions?: Record<string, string[]>
+  disabledClass?: string
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -18,6 +19,7 @@ export default defineNuxtModule<ModuleOptions>({
     global: true,
     redirect: '/',
     routePermissions: {},
+    disabledClass: '',
   },
 
   setup(options, nuxt) {

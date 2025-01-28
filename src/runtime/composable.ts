@@ -21,21 +21,17 @@ export const usePermission = () => {
   const hasPermission = (requiredPermissions: string[]): boolean => {
     if (isRoot.value) return true
 
-    // OR permissionlarını ve normal permissionları ayır
     const orPermissions = requiredPermissions
       .filter(p => p.startsWith('||'))
-      .map(p => p.slice(2)) // "||" işaretini kaldır
+      .map(p => p.slice(2))
 
     const andPermissions = requiredPermissions
       .filter(p => !p.startsWith('||'))
 
-    // OR permissionlarından herhangi birine sahipse true dön
     if (orPermissions.some(permission => userPermissions.value.includes(permission))) {
       return true
     }
 
-    // OR permissionları yoksa veya hiçbirine sahip değilse
-    // tüm AND permissionlarına sahip olması gerekir
     return andPermissions.every(permission => userPermissions.value.includes(permission))
   }
 

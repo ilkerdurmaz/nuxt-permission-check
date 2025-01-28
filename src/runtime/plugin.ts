@@ -32,7 +32,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
       if (isNegative ? userHasPermission : !userHasPermission) {
         if (isDisabled) {
-          el.style.opacity = '0.5'
+          el.classList.add(config.disabledClass || '')
           el.style.pointerEvents = 'none'
           el.style.cursor = 'not-allowed'
         }
