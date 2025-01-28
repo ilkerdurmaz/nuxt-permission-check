@@ -46,7 +46,7 @@ export default defineNuxtConfig({
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `global` | `boolean` | `true` | Enable global route middleware for permission checks |
-| `redirect` | `string` `boolean` | `false` | Path to redirect when access is unauthorized |
+| `redirect` | `string` `boolean` | `'/'` | Path to redirect when access is unauthorized |
 | `disabledClass` | `string` | `''` | CSS class applied to disabled elements with v-can directive |
 
 ## nuxtApp.$permissionCheck API
