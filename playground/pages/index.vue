@@ -49,6 +49,23 @@
             </li>
           </ul>
         </div>
+
+        <!-- V-Can Example -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-xl font-medium mb-4">
+            V-Can Example
+          </h2>
+          <div class="space-y-4">
+            <button
+              :key="selectedPermissions"
+              v-can.disabled="'user2:permission'"
+              class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              @click="console.log('clicked')"
+            >
+              Only user2:permission can click
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Right Column -->
@@ -96,79 +113,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Setup Instructions -->
-    <div class="mt-12 bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-2xl font-medium mb-4">
-        Quick Start Guide
-      </h2>
-
-      <div class="space-y-4">
-        <div>
-          <h3 class="text-lg font-medium mb-2">
-            1. Installation
-          </h3>
-          <pre class="bg-gray-50 p-3 rounded"><code>npm install nuxt-permission</code></pre>
-        </div>
-
-        <div>
-          <h3 class="text-lg font-medium mb-2">
-            2. Module Setup
-          </h3>
-          <pre class="bg-gray-50 p-3 rounded"><code>// nuxt.config.ts
-export default defineNuxtConfig({
-    modules: ['nuxt-permission'],
-    nuxtPermissionCheck: {
-        global: true,     // Enable global route middleware
-        redirect: '/'     // Redirect path for unauthorized access
-    }
-})</code></pre>
-        </div>
-
-        <div>
-          <h3 class="text-lg font-medium mb-2">
-            3. Define Route Permissions
-          </h3>
-          <pre class="bg-gray-50 p-3 rounded"><code>// plugins/permissions.js
-export default defineNuxtPlugin((nuxtApp) => {
-    const routePermissions = {
-        'user1-page': 'user1:permission',                          // Single permission
-        'user2-page': 'user2:permission',                          // Single permission
-        'combined': 'user1:permission && user2:permission',        // Requires both permissions
-        'any': 'user1:permission || user2:permission',             // Requires any of these permissions
-    };
-
-    // Set route permissions
-    nuxtApp.$permissionCheck.setRoutePermissions(routePermissions);
-});</code></pre>
-        </div>
-
-        <div>
-          <h3 class="text-lg font-medium mb-2">
-            4. Usage in Components
-          </h3>
-          <pre class="bg-gray-50 p-3 rounded"><code>// Set permissions for current user
-const app = useNuxtApp();
-app.$permissionCheck.setPermissions(['user1:permission']);
-
-// Handle unauthorized access
-app.$permissionCheck.setUnauthorizedCallback((route, requiredPermissions) => {
-    console.log(`Access Denied: Missing permissions (${requiredPermissions}) for ${route}`);
-});</code></pre>
-        </div>
-
-        <div>
-          <h3 class="text-lg font-medium mb-2">
-            5. Permission Types
-          </h3>
-          <div class="space-y-2 text-sm text-gray-600">
-            <p><code class="bg-gray-100 px-2 py-1 rounded">'route': 'permission'</code> - Requires exact permission</p>
-            <p><code class="bg-gray-100 px-2 py-1 rounded">'route': 'permission1 && permission2'</code> - Requires both permissions</p>
-            <p><code class="bg-gray-100 px-2 py-1 rounded">'route': 'permission1 || permission2'</code> - Requires any of the permissions</p>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -199,3 +143,11 @@ onMounted(() => {
   })
 })
 </script>
+
+<style>
+.permission-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+</style>
