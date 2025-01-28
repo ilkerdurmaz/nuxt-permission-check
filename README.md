@@ -59,6 +59,7 @@ export default defineNuxtConfig({
 | `canAccessRoute` | `(routeName: string, customPermissions?: string[]) => boolean` | Checks if user can access a specific route |
 | `getRequiredRoutePermissions` | `(routeName: string) => string[]` | Gets the required permissions for a route |
 | `isRoot` | `ComputedRef<boolean>` | Whether the user has root access (no permissions set) |
+| `setUnauthorizedCallback` | `(callback: (to: RouteLocationNormalizedGeneric, permissions: string[]) => void) => void` | Sets a callback for handling unauthorized access |
 
 ## Usage
 
