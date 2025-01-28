@@ -1,6 +1,5 @@
 <template>
   <div class="container mx-auto p-8">
-    <PermissionNotification ref="notification" />
     <!-- Header -->
     <h1 class="text-3xl font-medium mb-8">
       Nuxt Permission Playground
@@ -176,7 +175,6 @@ app.$permissionCheck.setUnauthorizedCallback((route, requiredPermissions) => {
 <script setup>
 const app = useNuxtApp()
 const permission = app.$permissionCheck
-const notification = ref(null)
 
 const availablePermissions = [
   'user1:permission',
@@ -184,7 +182,7 @@ const availablePermissions = [
   // Buraya daha fazla permission ekleyebilirsiniz
 ]
 
-const selectedPermissions = ref([])
+const selectedPermissions = ref(['user1:permission'])
 
 // Initialize permissions
 permission.setPermissions(selectedPermissions.value)
@@ -197,7 +195,7 @@ watch(selectedPermissions, (newPermissions) => {
 // Unauthorized callback
 onMounted(() => {
   app.$permissionCheck.setUnauthorizedCallback((route, requiredPermissions) => {
-    notification.value?.showMessage(`You do not have the required permissions (${requiredPermissions}) to access this page`)
+    notify.error(`You do not have the required permissions (${requiredPermissions}) to access this page`)
   })
 })
 </script>

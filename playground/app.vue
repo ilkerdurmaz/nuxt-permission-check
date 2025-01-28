@@ -2,8 +2,5 @@
   <div>
     <NuxtPage />
   </div>
+  <UiNotification />
 </template>
-
-<script setup>
-useNuxtApp().$permissionCheck.setPermissions(['user1:permission'])
-</script>
